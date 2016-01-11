@@ -17,7 +17,7 @@ app.use(middleware.logger);
 // Use any html file in the public folder
 //app.use(express.static(__dirname + '/public'));
 
-app.get('/', function() {
+app.get('/', function(req, res) {
     res.send('Todo API Root');
 });
 
