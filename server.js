@@ -42,7 +42,7 @@ app.get('/todos', function(req, res) {
 
     if(queryParams.hasOwnProperty('q') && queryParams.q.trim().length > 0) {
         filteredTodos = _.filter(filteredTodos, function(todo) {
-            return todo.description.indexOf(queryParams.q) > -1;
+            return todo.description.toLocaleLowerCase().indexOf(queryParams.q) > -1;
         });
     }
 
