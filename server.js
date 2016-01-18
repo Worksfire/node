@@ -153,7 +153,7 @@ app.post('/users/login', function(req, res) {
 });
 
 // USE {force:true} inside sync() to drop tables and rebuild
-db.sequelize.sync().then(function() {
+db.sequelize.sync({force:true}).then(function() {
     // Start the server
     app.listen(PORT, function() {
         console.log('Express listening on port:' + PORT);
