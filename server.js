@@ -1,16 +1,14 @@
 // Requires
-var express = require('express');
-var middleware = require('./middleware');
-var bodyParser = require('body-parser');
-var _ = require('underscore');
-var db = require('./db.js');
-// Server Vars
-var app = express();
-var PORT = process.env.PORT || 3000;
-
-// Vars
-var todos = [];
-var todoNextId = 1;
+var express = require('express'),
+    middleware = require('./middleware'),
+    bodyParser = require('body-parser'),
+    _ = require('underscore'),
+    db = require('./db.js'),
+    bcrypt = require('bcrypt'),
+    app = express(),
+    PORT = process.env.PORT || 3000,
+    todos = [],
+    todoNextId = 1;
 
 app.use(bodyParser.json());
 
@@ -140,6 +138,17 @@ app.put('/todos/:id', function(req, res) {
         }
     }, function() {
         res.status(500).send();
+    });
+});
+
+// POST /users/login
+app.post('/users/login', function(req, res) {
+    var body = _.pick(req.body, 'email', 'password');
+
+    db.user.authenticate(body).then(function(user) {
+        res.json(user.toPublicJSON());
+    }, function() {
+        res.status(401).send();
     });
 });
 
